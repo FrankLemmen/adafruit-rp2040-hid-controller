@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MarcoPad Key Colors</title>
+<style>
+  :root {
+    --bg: #f4f5f8;
+    --surface: #ffffff;
+    --text: #1b1f27;
+    --muted: #5d6573;
+    --line: #dde1e8;
+    --accent: #5b4bff;
+    --pad-body: #2b2f38;
+    --pad-edge: #1a1d23;
+    --key-off: #3a3f4b;
+    --screen: #0d1016;
+    --knob: #4a505e;
+    --arrow: #5b4bff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12141a;
+      --surface: #1b1e26;
+      --text: #e8eaf0;
+      --muted: #9aa2b1;
+      --line: #2c303b;
+      --accent: #8f84ff;
+      --pad-body: #2f343e;
+      --pad-edge: #0b0d11;
+      --arrow: #a59cff;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12141a;
+    --surface: #1b1e26;
+    --text: #e8eaf0;
+    --muted: #9aa2b1;
+    --line: #2c303b;
+    --accent: #8f84ff;
+    --pad-body: #2f343e;
+    --pad-edge: #0b0d11;
+    --arrow: #a59cff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 40px 16px 64px; }
+  header { margin-bottom: 32px; }
+  .eyebrow { color: var(--accent); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.15; margin: 6px 0 12px; }
+  .lead { color: var(--muted); font-size: 18px; max-width: 640px; margin: 0; }
+  h2 { font-size: 22px; margin: 48px 0 16px; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 28px;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .step h3 { margin: 0 0 8px; font-size: 19px; display: flex; align-items: center; gap: 10px; }
+  .num {
+    display: inline-grid; place-items: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #fff; font-size: 14px; font-weight: 700; flex: none;
+  }
+  .step p { margin: 0 0 10px; color: var(--muted); }
+  .step p:last-child { margin-bottom: 0; }
+  .step strong { color: var(--text); }
+  .pad svg { width: 100%; height: auto; display: block; }
+
+  .palette { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 6px; }
+  .sw { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; color: var(--muted); width: 46px; }
+  .sw i { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); display: block; }
+  .wrapnote { font-size: 13px; color: var(--muted); }
+
+  .grid12 { display: inline-grid; grid-template-columns: repeat(3, 34px); gap: 6px; margin: 10px 0; }
+  .grid12 span {
+    height: 28px; border-radius: 6px; background: var(--key-off); color: #fff;
+    display: grid; place-items: center; font-size: 12px; font-weight: 600;
+  }
+
+  .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .tip { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .tip b { display: block; margin-bottom: 4px; }
+  .tip span { color: var(--muted); font-size: 15px; }
+
+  .sim {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 24px; display: grid; grid-template-columns: 220px 1fr; gap: 28px; align-items: center;
+  }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+  button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    padding: 10px 16px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg); color: var(--text);
+  }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .status { font-size: 15px; color: var(--muted); min-height: 3em; }
+  .status b { color: var(--text); }
+
+  @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: .08; } }
+  .blink { animation: blink .5s infinite; }
+  @keyframes ring { from { r: 24; opacity: .9; } to { r: 40; opacity: 0; } }
+  .ring { animation: ring 1.2s ease-out infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .blink { animation-duration: 1.6s; }
+    .ring { animation: none; }
+  }
+
+  @media (max-width: 640px) {
+    .step, .sim { grid-template-columns: 1fr; }
+    .pad { max-width: 200px; margin: 0 auto; }
+  }
+  footer { margin-top: 48px; color: var(--muted); font-size: 14px; }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: .92em; background: var(--bg); padding: 1px 5px; border-radius: 5px; border: 1px solid var(--line); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">MarcoPad</div>
+    <h1>Setting the key colors</h1>
+    <p class="lead">Every key can have its own color. You set them with the knob alone: no software and no files needed. The colors are remembered after you unplug the pad.</p>
+  </header>
+
+  <h2>Four steps</h2>
+
+  <section class="step">
+    <div class="pad" data-pad='{"blink":0,"blinkColor":"#ffffff","knob":"push"}'></div>
+    <div>
+      <h3><span class="num">1</span>Push the knob to start</h3>
+      <p>Press the knob (top right) once. The pad enters <strong>programming mode</strong>, and <strong>key 1</strong> (top left) starts <strong>blinking white</strong>.</p>
+      <p>While you program, the keys don't send presses to your PC or game.</p>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="pad" data-pad='{"blink":0,"blinkColor":"#ff3b30","knob":"left"}'></div>
+    <div>
+      <h3><span class="num">2</span>Turn left to pick a color</h3>
+      <p>Each click <strong>to the left</strong> shows the next color on the blinking key:</p>
+      <div class="palette" id="palette"></div>
+      <p class="wrapnote">After White it starts again at Off. "Off" blinks dim white so you can still see which key you're on.</p>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="pad" data-pad='{"colors":{"0":"#ff3b30"},"blink":1,"blinkColor":"#ffffff","knob":"right"}'></div>
+    <div>
+      <h3><span class="num">3</span>Turn right to confirm</h3>
+      <p>One click <strong>to the right</strong> saves the color on the current key, and the <strong>next key</strong> starts blinking white.</p>
+      <p>Keys go in reading order. After key 12 it returns to key 1, so you can keep going around as long as you like:</p>
+      <div class="grid12" id="order"></div>
+      <p>To skip a key, just turn right without turning left first. It keeps its color.</p>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="pad" data-pad='{"colors":{"0":"#ff3b30","1":"#ff3b30","2":"#ff3b30","3":"#ffd000","4":"#22e05a","5":"#ffd000","6":"#2f6bff","7":"#2f6bff","8":"#2f6bff","9":"#8a3cff","10":"#ffffff","11":"#ff2fa8"},"knob":"push"}'></div>
+    <div>
+      <h3><span class="num">4</span>Push the knob to finish</h3>
+      <p>Press the knob again. Programming mode ends, all keys show their <strong>new colors</strong>, and the keys work as normal gamepad buttons again.</p>
+      <p>The colors are <strong>saved inside the pad</strong> and come back the next time you plug it in.</p>
+    </div>
+  </section>
+
+  <h2>Good to know</h2>
+  <div class="tips">
+    <div class="tip"><b>Only "right" saves</b><span>A color you picked with left turns but didn't confirm with a right turn is dropped when you push the knob to exit.</span></div>
+    <div class="tip"><b>Knob is quiet otherwise</b><span>Outside programming mode, turning the knob does nothing.</span></div>
+    <div class="tip"><b>Turning a key off</b><span>Choose "Off" (the first color) and confirm with a right turn.</span></div>
+    <div class="tip"><b>Brightness and speed</b><span>Change <code>BRIGHTNESS</code> or <code>BLINK_SECONDS</code> at the top of <code>code.py</code>.</span></div>
+  </div>
+
+  <h2>Try it here</h2>
+  <section class="sim">
+    <div class="pad" id="simPad"></div>
+    <div>
+      <p class="status" id="simStatus"></p>
+      <div class="controls">
+        <button id="bLeft">⟲ Turn left</button>
+        <button class="primary" id="bPush">● Push knob</button>
+        <button id="bRight">Turn right ⟳</button>
+      </div>
+      <p class="wrapnote">This simulator follows the same rules as the pad. Nothing here is sent to your device.</p>
+    </div>
+  </section>
+
+  <footer>Adafruit MacroPad RP2040 · CircuitPython · MarcoPad gamepad firmware</footer>
+</main>
+
+<script>
+const PALETTE = [
+  ["Off", null], ["Red", "#ff3b30"], ["Orange", "#ff7a00"], ["Yellow", "#ffd000"],
+  ["Green", "#22e05a"], ["Cyan", "#00e5ff"], ["Blue", "#2f6bff"], ["Purple", "#8a3cff"],
+  ["Magenta", "#ff2fa8"], ["White", "#ffffff"]
+];
+let uid = 0;
+
+function knobArrow(kind, id) {
+  const cx = 176, cy = 48;
+  if (kind === "push") {
+    return `<circle class="ring" cx="${cx}" cy="${cy}" r="24" fill="none" stroke="var(--arrow)" stroke-width="3"/>`;
+  }
+  // Arc above the knob; arrowhead marks the turn direction.
+  const d = kind === "left"
+    ? `M ${cx + 30} ${cy - 4} A 30 30 0 0 0 ${cx - 30} ${cy - 4}`
+    : `M ${cx - 30} ${cy - 4} A 30 30 0 0 1 ${cx + 30} ${cy - 4}`;
+  return `<defs><marker id="ah${id}" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)"/></marker></defs>
+    <path d="${d}" fill="none" stroke="var(--arrow)" stroke-width="4" stroke-linecap="round" marker-end="url(#ah${id})"/>`;
+}
+
+function padSVG(o) {
+  const id = ++uid;
+  const colors = o.colors || {};
+  let keys = "";
+  for (let i = 0; i < 12; i++) {
+    const x = 18 + (i % 3) * 64, y = 104 + Math.floor(i / 3) * 52;
+    let fill = colors[i] || null;
+    let cls = "";
+    if (o.blink === i) { fill = o.blinkColor; cls = "blink"; }
+    keys += `<rect x="${x}" y="${y}" width="54" height="44" rx="8" fill="var(--key-off)"/>`;
+    if (fill) {
+      keys += `<rect class="${cls}" x="${x}" y="${y}" width="54" height="44" rx="8" fill="${fill}" filter="url(#glow${id})"/>`;
+    }
+    keys += `<text x="${x + 27}" y="${y + 27}" text-anchor="middle" font-size="12" font-weight="700"
+      fill="${fill && fill !== '#2a2a2a' ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.55)'}"
+      font-family="system-ui, sans-serif">${i + 1}</text>`;
+  }
+  return `<svg viewBox="-10 -14 232 340" role="img" aria-label="MacroPad with 12 keys and a knob">
+    <defs><filter id="glow${id}" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter></defs>
+    <rect x="4" y="4" width="204" height="314" rx="18" fill="var(--pad-body)" stroke="var(--pad-edge)" stroke-width="3"/>
+    <rect x="86" y="-4" width="40" height="10" rx="3" fill="var(--pad-edge)"/>
+    <rect x="18" y="22" width="118" height="58" rx="6" fill="var(--screen)"/>
+    <circle cx="176" cy="48" r="22" fill="var(--knob)" stroke="var(--pad-edge)" stroke-width="3"/>
+    <circle cx="176" cy="48" r="13" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+    ${o.knob ? knobArrow(o.knob, id) : ""}
+    ${keys}
+  </svg>`;
+}
+
+document.querySelectorAll("[data-pad]").forEach(el => {
+  el.innerHTML = padSVG(JSON.parse(el.dataset.pad));
+});
+
+document.getElementById("palette").innerHTML = PALETTE.map(([n, c], i) =>
+  `<div class="sw"><i style="background:${c || 'var(--key-off)'}"></i>${i + 1}. ${n}</div>`).join("");
+document.getElementById("order").innerHTML =
+  Array.from({ length: 12 }, (_, i) => `<span>${i + 1}</span>`).join("");
+
+// Simulator: same rules as code.py.
+const sim = { colors: Array(12).fill(0), programming: false, key: 0, candidate: null, knob: null };
+function render() {
+  const colors = {};
+  sim.colors.forEach((c, i) => { if (PALETTE[c][1]) colors[i] = PALETTE[c][1]; });
+  const o = { colors, knob: sim.knob };
+  let msg;
+  if (sim.programming) {
+    o.blink = sim.key;
+    if (sim.candidate === null) o.blinkColor = "#ffffff";
+    else o.blinkColor = PALETTE[sim.candidate][1] || "#555a66";
+    const pick = sim.candidate === null ? "no color picked yet" : `showing <b>${PALETTE[sim.candidate][0]}</b>`;
+    msg = `<b>Programming mode.</b> Key ${sim.key + 1} is selected, ${pick}.`;
+  } else {
+    msg = "<b>Normal mode.</b> Push the knob to start programming.";
+  }
+  document.getElementById("simPad").innerHTML = padSVG(o);
+  document.getElementById("simStatus").innerHTML = msg;
+}
+document.getElementById("bPush").onclick = () => {
+  sim.programming = !sim.programming;
+  sim.key = 0; sim.candidate = null; sim.knob = "push"; render();
+};
+document.getElementById("bLeft").onclick = () => {
+  sim.knob = "left";
+  if (sim.programming) {
+    const start = sim.candidate === null ? sim.colors[sim.key] : sim.candidate;
+    sim.candidate = (start + 1) % PALETTE.length;
+  }
+  render();
+};
+document.getElementById("bRight").onclick = () => {
+  sim.knob = "right";
+  if (sim.programming) {
+    if (sim.candidate !== null) sim.colors[sim.key] = sim.candidate;
+    sim.key = (sim.key + 1) % 12; sim.candidate = null;
+  }
+  render();
+};
+render();
+</script>
+</body>
+</html>
